@@ -9,7 +9,7 @@
 #  updated_at   :datetime         not null
 #
 
-class ClassroomStudent < ApplicationRecord
+class ClassroomStudent < ActiveRecord::Base
   belongs_to :classroom
   belongs_to :student
 end

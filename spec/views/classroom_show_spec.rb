@@ -1,6 +1,6 @@
 require 'rails_helper'
-# removed: replaced by request specs
-RSpec.describe 'classroom_show_view', type: :view do
+
+RSpec.describe 'classroom_show_view' do
   let(:classroom) { Classroom.create(course_name: 'Math', semester: "Spring #{Time.now.year}") }
   let(:student) { Student.create(name: 'Bobby', hometown: Faker::Address.city, birthday: Faker::Date.between(from: 25.years.ago, to: 18.years.ago)) }
 
@@ -14,28 +14,39 @@ RSpec.describe 'classroom_show_view', type: :view do
   end
 
   it 'renders classroom information on the show view' do
-  # removed prefixes for compatibility
+    view.lookup_context.prefixes = %w[students classrooms]
     student = Student.create(name: 'Bobby', hometown: Faker::Address.city, birthday: Faker::Date.between(from: 25.years.ago, to: 18.years.ago))
-  @classroom = classroom
-  render template: 'classrooms/show.html.erb'
+    assign(:classroom, classroom)
+    render template: 'classrooms/show.html.erb'
     expect(rendered).to match /Math/
   end
 
   it 'renders a partial that only contains classroom (not student) information' do
-  # removed prefixes for compatibility
-  @classroom = classroom
-  render partial: 'classrooms/classroom', locals: { classroom: @classroom }
+    view.lookup_context.prefixes = %w[students]
+    assign(:classroom, classroom)
+    render partial: 'classrooms/classroom.html.erb', locals: { classroom: classroom }
     expect(rendered).to match /Math/
   end
 
-  it 'renders student information for each student using the partial' do
-  # removed prefixes for compatibility
-  @classroom = classroom
-  render template: 'classrooms/show.html.erb'
-    classroom.students.each do |student|
-      expect(rendered).to include(student.name)
-    end
+  it 'renders a students/student partial' do
+    view.lookup_context.prefixes = %w[students classrooms]
+    assign(:classroom, classroom)
+    render template: 'classrooms/show.html.erb'
+    expect(rendered).to render_template(partial: 'students/_student')
   end
 
-  # Already covered by previous test: student info is rendered from the partial
+  it 'displays the student information from the partial' do
+    view.lookup_context.prefixes = %w[students classrooms]
+    assign(:classroom, classroom)
+    render template: 'classrooms/show.html.erb'
+    expect(classroom.students.count).to eq 5
+    classroom.students.each do |student|
+      if student.name.include? "'"
+        s = student.name.gsub(/'/, '&#39;')
+        expect(rendered).to include(s)
+      else
+        expect(rendered).to include(student.name)
+    end
+    end
+  end
 end
