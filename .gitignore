@@ -38,6 +38,10 @@ jspm_packages
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
+/db/development.sqlite3-shm
+/db/development.sqlite3-wal
+/db/test.sqlite3-shm
+/db/test.sqlite3-wal
 
 # Ignore all logfiles and tempfiles.
 /log/*
