@@ -1,7 +1,7 @@
-# removed: replaced by request specs
+
 require "rails_helper"
 
-RSpec.describe "Student", type: :view do
+RSpec.describe "Student" do
   describe 'search' do
     let(:student_names) { ['Bob', 'Robert', 'Roberta', 'Shirley', 'Shelby'] }
 
@@ -13,20 +13,17 @@ RSpec.describe "Student", type: :view do
 
     context 'when it receives a search query' do
       it 'returns all students whose names contain the given string' do
-  # removed prefixes for compatibility
-  @students = Student.search('rob')
-  render :template => "students/index.html.erb"
+        view.lookup_context.prefixes = %w[students]
+        assign(:students, Student.search('rob'))
+        render :template => "students/index.html.erb"
         expect(rendered).to match /Roberta/
       end
 
       it 'renders the results with a partial' do
-  # removed prefixes for compatibility
-  @students = Student.search('rob')
-  render template: 'students/index.html.erb'
-        # Instead of render_template, check for content from the partial
-        Student.search('rob').each do |student|
-          expect(rendered).to include(student.name)
-        end
+        view.lookup_context.prefixes = %w[students]
+        assign(:students, Student.search('rob'))
+        render template: 'students/index.html.erb'
+        expect(rendered).to render_template(partial: '_student')
       end
     end
   end
