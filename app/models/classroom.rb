@@ -9,7 +9,7 @@
 #  updated_at  :datetime         not null
 #
 
-class Classroom < ActiveRecord::Base
+class Classroom < ApplicationRecord
   has_many :classroom_students
   has_many :students, through: :classroom_students
 
