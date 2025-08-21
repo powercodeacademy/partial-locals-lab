@@ -15,14 +15,14 @@ RSpec.describe "Student" do
       it 'returns all students whose names contain the given string' do
         view.lookup_context.prefixes = %w[students]
         assign(:students, Student.search('rob'))
-        render :template => "students/index.html.erb"
+        render :template => "students/index"
         expect(rendered).to match /Roberta/
       end
 
       it 'renders the results with a partial' do
         view.lookup_context.prefixes = %w[students]
         assign(:students, Student.search('rob'))
-        render template: 'students/index.html.erb'
+        render template: 'students/index'
         expect(rendered).to render_template(partial: '_student')
       end
     end

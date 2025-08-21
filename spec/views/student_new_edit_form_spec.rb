@@ -6,7 +6,7 @@ RSpec.describe "create and edit form" do
       view.lookup_context.prefixes = %w[students]
       student = Student.new
       assign(:student, student)
-      render :template => "students/new.html.erb"
+      render :template => "students/new"
       expect(rendered).to match /Create Student/
     end
 
@@ -14,7 +14,7 @@ RSpec.describe "create and edit form" do
       view.lookup_context.prefixes = %w[students]
       student = Student.new
       assign(:student, student)
-      render :template => "students/new.html.erb"
+      render :template => "students/new"
       expect(rendered).to render_template(:partial => "_form")
     end
 
@@ -24,7 +24,7 @@ RSpec.describe "create and edit form" do
       student = Student.new
       assign(:student, student)
 
-      render :template => "students/new.html.erb"
+      render :template => "students/new"
       expect(rendered).to render_template(:partial => "_form", locals: {student: student})
     end
   end
@@ -34,7 +34,7 @@ RSpec.describe "create and edit form" do
       view.lookup_context.prefixes = %w[students]
       student = Student.create(name: 'Bobby', hometown: Faker::Address.city, birthday: Faker::Date.between(from: 25.years.ago, to: 18.years.ago))
       assign(:student, student)
-      render :template => "students/edit.html.erb"
+      render :template => "students/edit"
       expect(rendered).to match /Update Student/
     end
 
@@ -42,7 +42,7 @@ RSpec.describe "create and edit form" do
       view.lookup_context.prefixes = %w[students]
       student = Student.create(name: 'Bobby', hometown: Faker::Address.city, birthday: Faker::Date.between(from: 25.years.ago, to: 18.years.ago))
       assign(:student, student)
-      render :template => "students/new.html.erb"
+      render :template => "students/new"
 
       expect(rendered).to render_template(:partial => "_form")
     end
@@ -53,7 +53,7 @@ RSpec.describe "create and edit form" do
       student = Student.create(name: 'Bobby', hometown: Faker::Address.city, birthday: Faker::Date.between(from: 25.years.ago, to: 18.years.ago))
       assign(:student, student)
 
-      render :template => "students/edit.html.erb"
+      render :template => "students/edit"
       expect(rendered).to render_template(:partial => "_form", locals: {student: student})
     end
   end

@@ -17,28 +17,28 @@ RSpec.describe 'classroom_show_view' do
     view.lookup_context.prefixes = %w[students classrooms]
     student = Student.create(name: 'Bobby', hometown: Faker::Address.city, birthday: Faker::Date.between(from: 25.years.ago, to: 18.years.ago))
     assign(:classroom, classroom)
-    render template: 'classrooms/show.html.erb'
+    render template: 'classrooms/show'
     expect(rendered).to match /Math/
   end
 
   it 'renders a partial that only contains classroom (not student) information' do
     view.lookup_context.prefixes = %w[students]
     assign(:classroom, classroom)
-    render partial: 'classrooms/classroom.html.erb', locals: { classroom: classroom }
+    render partial: 'classrooms/classroom', locals: { classroom: classroom }
     expect(rendered).to match /Math/
   end
 
   it 'renders a students/student partial' do
     view.lookup_context.prefixes = %w[students classrooms]
     assign(:classroom, classroom)
-    render template: 'classrooms/show.html.erb'
+    render template: 'classrooms/show'
     expect(rendered).to render_template(partial: 'students/_student')
   end
 
   it 'displays the student information from the partial' do
     view.lookup_context.prefixes = %w[students classrooms]
     assign(:classroom, classroom)
-    render template: 'classrooms/show.html.erb'
+    render template: 'classrooms/show'
     expect(classroom.students.count).to eq 5
     classroom.students.each do |student|
       if student.name.include? "'"
