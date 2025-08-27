@@ -21,7 +21,13 @@ class StudentsController < ApplicationController
   end
 
   def index
-    @students = Student.all
+    if params[:query] && !params[:query].empty?
+      @students = Student.search(params[:query])
+      @heading = "Students Matching Search: #{params[:query]}"
+    else 
+      @students = Student.all 
+      @heading = "All Students" 
+    end
   end
 
   def student_params
