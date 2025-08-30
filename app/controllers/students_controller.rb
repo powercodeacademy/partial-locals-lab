@@ -1,6 +1,22 @@
 class StudentsController < ApplicationController
+  def index
+    @students = if params[:query].present?
+                  Student.search(params[:query])
+                else
+                  Student.all
+                end
+  end
+
+  def show
+    @student = Student.find(params[:id])
+  end
+
   def new
     @student = Student.new
+  end
+
+  def edit
+    @student = Student.find(params[:id])
   end
 
   def create
@@ -8,20 +24,8 @@ class StudentsController < ApplicationController
     if @student.save
       redirect_to @student
     else
-      render 'new'
+      render "new"
     end
-  end
-
-  def edit
-    @student = Student.find(params[:id])
-  end
-
-  def show
-    @student = Student.find(params[:id])
-  end
-
-  def index
-    @students = Student.all
   end
 
   def student_params

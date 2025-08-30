@@ -1,0 +1,11 @@
+<h1>Students</h1>
+
+<%= form_with url: students_path, method: :get, local: true do |f| %>
+  <%= f.label :query, "Search students" %>
+  <%= f.text_field :query, value: @query, placeholder: "Type a name…" %>
+  <%= f.submit "Search" %>
+<% end %>
+
+<ul>
+  <%= render @students %>
+</ul>
