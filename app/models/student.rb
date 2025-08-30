@@ -13,4 +13,9 @@
 class Student < ActiveRecord::Base
   has_many :classroom_students
   has_many :classrooms, through: :classroom_students
+
+  scope :search, lambda { |q|
+    term = q.to_s.strip
+    term.blank? ? all : where("name LIKE ?", "%#{term}%")
+  }
 end
