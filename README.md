@@ -6,7 +6,7 @@ couple new features using this new tool.
 ## Objectives
 
 1. Use the `locals` keyword
-2. Understand why using instance variables in partials is bad
+2. Understand why using instance variables in partials is discouraged in Rails 7.1+
 3. Use a partial to iterate over a collection, passing in a local
 4. Use a partial from another controller with a local
 
@@ -30,9 +30,7 @@ students with similar names are returned in the search results.
 
 ## Instructions
 
-1. Refactor the `_form.html.erb` partial to accept the argument to the
-   `form_for` helper as a local. You'll also need to change the `new.html.erb` and
-   `edit.html.erb` views as well.
+1. Refactor the `_form.html.erb` partial to use the `form_with` helper. You'll also need to change the `new.html.erb` and `edit.html.erb` views as well.
 
 2. Refactor the `_student.html.erb` partial to pass through each rendered
    student as a local.
@@ -48,15 +46,15 @@ students with similar names are returned in the search results.
    index page. The results should be displayed by rendering a
    `students/_student.html.erb` partial.
 
-To start on this last deliverable, add a search form using the `form_tag` helper
+To start on this last deliverable, add a search form using the `form_with` helper
 to your students index page:
 
 ```erb
-<%= form_tag students_path, method: :get do %>
-  <p>
-    <%= text_field_tag :query, params[:query] %>
-    <%= submit_tag "Search", name: nil %>
-  </p>
+<%= form_with url: students_path, method: :get, local: true do |form| %>
+   <p>
+      <%= form.text_field :query, value: params[:query] %>
+      <%= form.submit "Search" %>
+   </p>
 <% end %>
 ```
 
