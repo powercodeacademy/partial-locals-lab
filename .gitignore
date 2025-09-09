@@ -1,5 +1,3 @@
-# Created by https://www.gitignore.io/api/node
-
 .DS_Store
 
 ### Node ###
@@ -36,7 +34,7 @@ jspm_packages
 /.bundle
 
 # Ignore the default SQLite database.
-/db/*.sqlite3
+/db/*.sqlite3*
 /db/*.sqlite3-journal
 /db/*.sqlite3-shm
 /db/*.sqlite3-wal
